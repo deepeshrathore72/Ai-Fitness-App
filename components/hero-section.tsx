@@ -128,7 +128,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-balance"
           >
-            Transform Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-400">Fitness Journey</span>
+            Transform Your <span className="bg-clip-text text-transparent bg-linear-to-r from-primary to-green-400">Fitness Journey</span>
           </motion.h1>
 
           <motion.p
