@@ -153,9 +153,9 @@ export function HeroSection() {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg shadow-primary/50"
               >
-                <Link href="/auth">
+                <Link href={isLoggedIn ? "/dashboard" : "/auth"}>
                   <Dumbbell className="w-5 h-5 mr-2" />
-                  Start Your Journey
+                  {isLoggedIn ? "Create New Plan" : "Start Your Journey"}
                 </Link>
               </Button>
             </motion.div>
@@ -167,7 +167,11 @@ export function HeroSection() {
                 variant="outline"
                 className="px-8 py-6 text-lg font-semibold rounded-xl bg-transparent border-2"
               >
-                <Link href="#features">Learn More</Link>
+                {isLoggedIn ? (
+                  <Link href="/saved-plans">View Plans</Link>
+                ) : (
+                  <Link href="#features">Learn More</Link>
+                )}
               </Button>
             </motion.div>
           </motion.div>
@@ -185,7 +189,7 @@ export function HeroSection() {
             <span className="w-1 h-1 rounded-full bg-muted-foreground" />
             <span>Voice Guidance</span>
             <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-            <span>Image Generation</span>
+            <span>Image Guidance</span>
           </motion.div>
         </div>
       </div>

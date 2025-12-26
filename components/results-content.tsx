@@ -36,6 +36,25 @@ export function ResultsContent() {
       return
     }
 
+    // Check if viewing a saved plan
+    const viewingPlan = localStorage.getItem("viewingPlan")
+    if (viewingPlan) {
+      try {
+        const plan = JSON.parse(viewingPlan)
+        setFormData(plan.userDetails)
+        setWorkoutPlan(plan.workoutPlan)
+        setDietPlan(plan.dietPlan)
+        setSavedPlanId(plan.id)
+        setIsLoading(false)
+        // Clear the viewing plan flag
+        localStorage.removeItem("viewingPlan")
+        return
+      } catch (error) {
+        console.error("Error loading saved plan:", error)
+      }
+    }
+
+    // Otherwise, generate new plan
     const data = localStorage.getItem("fitnessFormData")
     if (!data) {
       router.push("/dashboard")
@@ -412,58 +431,38 @@ export function ResultsContent() {
     setIsSaving(true)
     try {
       const userEmail = localStorage.getItem("userEmail")
+      const userName = localStorage.getItem("userName")
       if (!userEmail) {
         alert("Please log in to save your plan")
+        setIsSaving(false)
         return
       }
 
-      // Normalize form data to match backend enum values
-      const normalizedData = normalizeFormValues(formData)
-
-      // Convert diet plan to string format for database
-      const stringifiedDietPlan = convertDietPlanToStrings(dietPlan)
-
-      const response = await fetch("/api/plans/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: userEmail,
-          userDetails: {
-            name: normalizedData?.name,
-            age: Number(normalizedData?.age),
-            gender: normalizedData?.gender,
-            height: Number(normalizedData?.height),
-            weight: Number(normalizedData?.weight),
-            fitnessGoal: normalizedData?.fitnessGoal,
-            fitnessLevel: normalizedData?.fitnessLevel,
-            workoutLocation: normalizedData?.workoutLocation,
-            dietaryPreference: normalizedData?.dietaryPreference,
-            medicalHistory: normalizedData?.medicalHistory || '',
-            stressLevel: normalizedData?.stressLevel || 'medium',
-          },
-          workoutPlan,
-          dietPlan: stringifiedDietPlan,
-          aiTips: {
-            lifestyle: ["Stay hydrated", "Get adequate sleep", "Maintain consistency"],
-          },
-        }),
-      })
-
-      const result = await response.json()
-      console.log("Save plan response:", result)
-
-      if (!response.ok) {
-        console.error("Save plan error details:", result)
-        throw new Error(result.details || result.error || "Failed to save plan")
+      // Create plan object
+      const planToSave = {
+        id: Date.now().toString(),
+        email: userEmail,
+        userName: userName || formData?.name,
+        userDetails: formData,
+        workoutPlan,
+        dietPlan,
+        createdAt: new Date().toISOString(),
       }
 
-      setSavedPlanId(result.planId)
-      alert("Plan saved successfully to your account!")
+      // Get existing plans from localStorage
+      const existingPlans = JSON.parse(localStorage.getItem("savedFitnessPlans") || "[]")
+      
+      // Add new plan
+      existingPlans.push(planToSave)
+      
+      // Save back to localStorage
+      localStorage.setItem("savedFitnessPlans", JSON.stringify(existingPlans))
+
+      setSavedPlanId(planToSave.id)
+      alert("✅ Plan saved successfully!")
     } catch (error) {
       console.error("Error saving plan:", error)
-      const errorMessage = error instanceof Error ? error.message : "Unknown error"
-      console.error("Full error details:", errorMessage)
-      alert(`Failed to save plan: ${errorMessage}`)
+      alert("❌ Failed to save plan. Please try again.")
     } finally {
       setIsSaving(false)
     }
