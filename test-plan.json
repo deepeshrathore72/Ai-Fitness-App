@@ -1,0 +1,63 @@
+{
+  "email": "test@example.com",
+  "userDetails": {
+    "name": "John Doe",
+    "age": 25,
+    "gender": "male",
+    "height": 175,
+    "weight": 70,
+    "fitnessGoal": "muscle_gain",
+    "fitnessLevel": "intermediate",
+    "workoutLocation": "gym",
+    "dietaryPreference": "non_vegetarian",
+    "medicalHistory": "None",
+    "stressLevel": "medium"
+  },
+  "workoutPlan": [
+    {
+      "day": "Monday",
+      "exercises": [
+        {
+          "name": "Bench Press",
+          "sets": 4,
+          "reps": "8-10",
+          "rest": "90 seconds",
+          "notes": "Keep your back flat on the bench"
+        },
+        {
+          "name": "Barbell Squat",
+          "sets": 4,
+          "reps": "8-10",
+          "rest": "90 seconds",
+          "notes": "Keep your core tight"
+        }
+      ]
+    }
+  ],
+  "dietPlan": [
+    {
+      "day": "Monday",
+      "meals": {
+        "breakfast": "Oatmeal with berries and protein powder - 500 calories",
+        "lunch": "Grilled chicken breast with quinoa and vegetables - 600 calories",
+        "dinner": "Salmon with sweet potato and broccoli - 700 calories",
+        "snacks": "Greek yogurt and almonds - 200 calories"
+      },
+      "calories": 2000
+    }
+  ],
+  "aiTips": {
+    "lifestyle": [
+      "Get 7-8 hours of quality sleep",
+      "Stay hydrated - drink 3-4 liters of water daily",
+      "Take rest days seriously for muscle recovery"
+    ],
+    "posture": [
+      "Keep your shoulders back and chest up",
+      "Maintain neutral spine during exercises",
+      "Focus on proper form over heavy weights"
+    ],
+    "motivation": "Success isn't always about greatness. It's about consistency. Consistent hard work leads to success."
+  },
+  "generatedAt": "2025-12-25T10:00:00.000Z"
+}
