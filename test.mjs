@@ -2,7 +2,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 async function testKey() {
-  const apiKey = "AIzaSyDt1wA21XQgt0N4LFjoPrrNnG2NCr3_uYM"; // Use a variable, don't hardcode if sharing
+  const apiKey = ""; // Use a variable, don't hardcode if sharing
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
     const data = await response.json();
